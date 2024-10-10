@@ -32,7 +32,7 @@ class QuboSolver:
         n_assets: int,
         problem_name: str,
         constraint_sense: str,
-        estimator: StatevectorEstimator,
+        estimator: Estimator | StatevectorEstimator,
         ansatz_options: AnsatzOptions,
     ) -> None:
         self.__linear_weights = linear_weights
