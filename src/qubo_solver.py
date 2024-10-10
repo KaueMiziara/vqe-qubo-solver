@@ -5,6 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import minimize
 
+from ansatz_options import AnsatzOptions
 from qiskit_aer import AerSimulator
 from qiskit.quantum_info import SparsePauliOp
 from qiskit.circuit.library import NLocal, TwoLocal
@@ -32,7 +33,7 @@ class QuboSolver:
         problem_name: str,
         constraint_sense: str,
         estimator: StatevectorEstimator,
-        ansatz: NLocal,
+        ansatz_options: AnsatzOptions,
     ) -> None:
         self.__linear_weights = linear_weights
         self.__quadratic_weights = quadratic_weights
@@ -42,9 +43,16 @@ class QuboSolver:
         self.__constraint_sense = constraint_sense
 
         self.__estimator = estimator
-        self.__ansatz = ansatz
 
         self.__hamilt = self.__create_hamilt()
+
+        self.__ansatz = TwoLocal(
+            num_qubits=self.__hamilt.num_qubits,
+            rotation_blocks=ansatz_options.rotation_blocks,
+            entanglement_blocks=ansatz_options.entanglement_blocks,
+            entanglement=ansatz_options.entanglement,
+            reps=ansatz_options.reps,
+        )
 
         self.__cost_dict: Dict[str, list[np.ndarray] | int | None] = {
             "prev_vector": None,
