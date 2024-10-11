@@ -54,3 +54,40 @@ class QuboSolverBuilder:
         if estimator:
             self.__estimator = estimator
         pass
+
+    def set_ansatz(
+        self,
+        rotation_blocks: str | list[str] | None,
+        entanglement_blocks: str | list[str] | None,
+        entanglement: str | None,
+        reps: int | None,
+    ):
+        if rotation_blocks is None:
+            rotation_blocks = "ry"
+
+        if entanglement_blocks is None:
+            entanglement_blocks = "cz"
+
+        if entanglement is None:
+            entanglement = "linear"
+
+        if entanglement not in [
+            "linear",
+            "full",
+            "reverse_linear",
+            "pairwise",
+            "circular",
+            "sca",
+        ]:
+            print(f"Error! Invalid entanglement strategy: {entanglement}")
+
+        if reps is None:
+            reps = 0
+
+        self.__ansatz = AnsatzOptions(
+            rotation_blocks,
+            entanglement_blocks,
+            entanglement,
+            reps,
+        )
+        pass
