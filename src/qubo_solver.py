@@ -1,27 +1,16 @@
-from typing import Any, Dict, List, Tuple
-from collections import Counter, defaultdict
+from typing import Dict
 
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import minimize
 
-from ansatz_options import AnsatzOptions
-from qiskit_aer import AerSimulator
 from qiskit.quantum_info import SparsePauliOp
-from qiskit.circuit.library import NLocal, TwoLocal
-from qiskit_algorithms.utils import algorithm_globals
-from qiskit_algorithms import VQE, NumPyMinimumEigensolver
-from qiskit_algorithms.optimizers import COBYLA
-from qiskit.primitives import Sampler, Estimator, StatevectorEstimator
-from qiskit_optimization.algorithms import (
-    MinimumEigenOptimizer,
-    RecursiveMinimumEigenOptimizer,
-    SolutionSample,
-    OptimizationResultStatus,
-)
+from qiskit.circuit.library import TwoLocal
+from qiskit.primitives import Estimator, StatevectorEstimator
 from qiskit_optimization import QuadraticProgram
 from qiskit_optimization.converters import LinearEqualityToPenalty, InequalityToEquality
-from qiskit.visualization import plot_histogram
+
+from ansatz_options import AnsatzOptions
 
 
 class QuboSolver:
