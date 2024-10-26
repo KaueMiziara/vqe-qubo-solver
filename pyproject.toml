@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "qubo_solver"
+version = "0.1.0"
+description = "Solver for QUBO problems using Qiskit and VQE"
+authors = [{ name = "Kaue Miziara", email = "kauemiziara@gmail.com" }]
+readme = "README.md"
+license = {text = "MIT"}
+dependencies = [
+    "numpy",
+    "matplotlib",
+    "scipy",
+    "qiskit",
+    "qiskit_optimization",
+]
+
+[tool.setuptools.packages]
+find = { where = ["src"] }

@@ -10,7 +10,7 @@ from qiskit.primitives import Estimator, StatevectorEstimator
 from qiskit_optimization import QuadraticProgram
 from qiskit_optimization.converters import LinearEqualityToPenalty, InequalityToEquality
 
-from ansatz_options import AnsatzOptions
+from .ansatz_options import AnsatzOptions
 
 
 class QuboSolver:
