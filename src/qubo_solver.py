@@ -1,3 +1,31 @@
+"""
+Copyright 2024 Kauê Miziara
+
+Permission is hereby granted, free of charge, to any
+person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the
+Software without restriction, including without
+limitation the rights to use, copy, modify, merge,
+publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software
+is furnished to do so, subject to the following
+conditions:
+
+The above copyright notice and this permission notice
+shall be included in all copies or substantial portions
+of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF
+ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
+TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT
+SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
+IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+"""
+
 from typing import Dict
 
 import numpy as np
@@ -49,7 +77,6 @@ class QuboSolver:
             "assets_history": [],
         }
 
-        pass
 
     def run(self, shots: int, method: str = "COBYLA") -> dict[tuple, int]:
         r = []
@@ -64,6 +91,7 @@ class QuboSolver:
             r.append(self.__process_results(self.__cost_dict.get("prev_vector")))
 
         return self.__count_results(r)
+
 
     def plot_histogram(self, count_dict: dict) -> None:
         binary_arrays = list(count_dict.keys())
@@ -87,6 +115,7 @@ class QuboSolver:
         plt.tight_layout()
 
         plt.show()
+
 
     def __create_qubo(self) -> QuadraticProgram:
         qubo = QuadraticProgram(self.__problem_name)
@@ -115,11 +144,13 @@ class QuboSolver:
 
         return qubo
 
+
     def __create_hamilt(self) -> SparsePauliOp:
         qubo = self.__create_qubo()
         hamilt, _ = qubo.to_ising()
         return hamilt
 
+  
     def __process_results(self, results: list[np.ndarray]) -> list[int]:
         smallest_indices = np.argsort(results)[: self.__n_assets]
         binary_array = np.zeros_like(results, dtype=int)
@@ -127,6 +158,7 @@ class QuboSolver:
         binary_array[smallest_indices] = 1
         return binary_array.tolist()
 
+   
     def __count_results(self, results: list[list[float | int]]) -> dict[tuple, int]:
         count_dict = {}
         for arr in results:
@@ -137,6 +169,7 @@ class QuboSolver:
                 count_dict[arr_tuple] = 1
         return count_dict
 
+   
     def __cost_func(self, params, ansatz, hamiltonian, estimator, cost_history_dict):
         """Return estimate of energy from estimator
 
